@@ -5,11 +5,11 @@ import java.util.UUID;
 public class Report {
 	private Logradouro logradouro;
 	private String reportText;
-	private String cpf;
 	private String email;
 	private boolean sent;
 	private String pictureFile;
 	private UUID uuid;
+	private String time;
 
 	public Report(Logradouro logradouro, boolean sent) {
 		this.logradouro = logradouro;
@@ -25,20 +25,12 @@ public class Report {
 		this.logradouro = logradouro;
 	}
 
-	public String getReport() {
+	public String getReportText() {
 		return reportText;
 	}
 
-	public void setReport(String report) {
+	public void setReportText(String report) {
 		this.reportText = report;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public boolean isSent() {
@@ -67,6 +59,24 @@ public class Report {
 
 	public UUID getUuid() {
 		return uuid;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Report){
+			if(((Report) o).getUuid().equals(this.getUuid())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

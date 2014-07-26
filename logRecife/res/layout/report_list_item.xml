@@ -36,4 +36,12 @@
         android:text="Item"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/report_list_textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/report_list_textView"
+        android:layout_alignParentBottom="true"
+        android:text="Data" />
+
 </RelativeLayout>

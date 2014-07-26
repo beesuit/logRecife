@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 
 public class ReportActivity extends FragmentActivity {
@@ -18,6 +19,7 @@ public class ReportActivity extends FragmentActivity {
 		
 		if(getIntent() != null){
 			uuid = (UUID) getIntent().getSerializableExtra(ReportListFragment.UUID);
+			//Log.e("teste", uuid.toString());
 		}
 		
 		FragmentManager manager = getSupportFragmentManager();

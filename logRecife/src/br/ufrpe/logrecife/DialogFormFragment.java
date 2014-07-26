@@ -11,17 +11,14 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 
 public class DialogFormFragment extends DialogFragment {
-	
-	public static final String EXTRA_CPF = "cpf";
+
 	public static final String EXTRA_EMAIL = "email";
 
 	//test
-	private String cpf;
 	private String email;
 
 	public DialogFormFragment() {
 		// TODO Auto-generated constructor stub
-		cpf = "cpf";
 		email = "email";
 	}
 
@@ -54,7 +51,6 @@ public class DialogFormFragment extends DialogFragment {
             return;
 
         Intent i = new Intent();
-        i.putExtra(EXTRA_CPF, cpf);
         i.putExtra(EXTRA_EMAIL, email);
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, i);
     }

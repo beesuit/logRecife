@@ -81,10 +81,12 @@ public class GeoCoderTask extends AsyncTask<Void, Void, Void> {
 			Bundle bundle = new Bundle();
 			bundle.putParcelableArrayList("teste", mListAddress);
 			list.setArguments(bundle);
+			((FragmentActivity) context).getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 			FragmentTransaction fragmentTransaction = ((FragmentActivity) context)
 					.getSupportFragmentManager().beginTransaction();
 			fragmentTransaction.replace(R.id.containerTeste, list, "list");
 			//fragmentTransaction.commit();
+			fragmentTransaction.addToBackStack(null);
 			fragmentTransaction.commitAllowingStateLoss();
 		}
 		

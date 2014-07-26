@@ -1,9 +1,16 @@
 package br.ufrpe.logrecife.model;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class LogRecife {
 	private static LogRecife sLogRecife;
@@ -59,6 +66,42 @@ public class LogRecife {
 			}
 		}
 		return null;
+	}
+	
+	public void removeReport(Report report){
+		reports.remove(report);
+	}
+	
+	public String toJSON(){
+		Gson gson = new Gson();
+		Type arrayListType = new TypeToken<ArrayList<Report>>(){}.getType();
+		return gson.toJson(reports, arrayListType);
+	}
+	
+	public void writeToFile(){
+		String json = toJSON();
+		
+		SharedPreferences sharedPref = mAppContext.getSharedPreferences( "appData", Context.MODE_PRIVATE );
+    	SharedPreferences.Editor prefEditor = sharedPref.edit();
+    	prefEditor.putString("jsonArray", json);
+    	prefEditor.commit();
+	}
+	
+	private String readFromFile(){
+		String result;
+		SharedPreferences sharedPref = mAppContext.getSharedPreferences("appData", Context.MODE_PRIVATE);
+		result = sharedPref.getString("jsonArray", "Erro");
+		Log.e("teste", result);
+		return result;
+	}
+	
+	public void loadFromFile(){
+		String json = readFromFile();
+		if(!json.equals("Erro")){
+			Gson gson = new Gson();
+			Type arrayListType = new TypeToken<ArrayList<Report>>(){}.getType();
+			reports = gson.fromJson(json, arrayListType);
+		}
 	}
 
 }

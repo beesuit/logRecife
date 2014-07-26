@@ -42,6 +42,13 @@ public class ReportListAdapter extends ArrayAdapter<Report>{
 
 		textView.setText(report.getLogradouro().getLogradouro());
 		
+		TextView textView2 = (TextView)v.findViewById(R.id.report_list_textView2);
+		if(report.isSent()){
+			textView2.setText("Enviado em: " + report.getTime());
+		}else{
+			textView2.setText("Rascunho salvo em: " + report.getTime());
+		}
+		
 		CheckBox checkBox = (CheckBox) v.findViewById(R.id.report_list_checkBox);
 		
 		checkBox.setChecked(report.isSent());

@@ -11,20 +11,6 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/form_cpf_textView"
-            style="?android:listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CPF" />
-
-        <EditText
-            android:id="@+id/form_cpf_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="Digite o seu CPF" />
-
-        <TextView
             android:id="@+id/form_email_textView"
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"

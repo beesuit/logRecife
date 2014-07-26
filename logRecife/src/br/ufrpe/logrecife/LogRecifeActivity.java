@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -44,15 +45,18 @@ public class LogRecifeActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+		LogRecife.get(this).loadFromFile();
+
 		setContentView(R.layout.activity_log_recife);
 		mTitle = (String) this.getTitle();
 
 		ArrayList<String> array = new ArrayList<String>();
-		array.add("Bairro");
-		array.add("Quadra");
-		array.add("Logradouro");
+		array.add("Mapa");
+		array.add("Reclamações");
+		//array.add("Logradouro");
 
+		
 		mMapFragment = SupportMapFragment.newInstance();
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 		fragmentTransaction.add(R.id.containerTeste, mMapFragment, "map");
@@ -63,20 +67,46 @@ public class LogRecifeActivity extends FragmentActivity {
 
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-		          android.R.layout.simple_list_item_1, android.R.id.text1, array));
+				android.R.layout.simple_list_item_1, android.R.id.text1, array));
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView parent, View view, int position, long id){
 				//TODO
-				ReportListFragment fragment = ReportListFragment.newInstance();
-				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-				ft.replace(R.id.containerTeste, fragment, "reportList");
-				ft.commit();
-				mDrawerList.setItemChecked(position, true);
-				//getActionBar().setTitle(mTitle);
-			    mDrawerLayout.closeDrawer(mDrawerList);
+				//drawerMenu
 
+				switch(position){
+				case 0:
+					getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+					FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+					fragmentTransaction.replace(R.id.containerTeste, mMapFragment, "map");
+					//fragmentTransaction.addToBackStack(null);
+					fragmentTransaction.commit();
+					mDrawerList.setItemChecked(position, true);
+					mDrawerLayout.closeDrawer(mDrawerList);
+
+					//getSupportFragmentManager().popBackStackImmediate();
+					//getSupportFragmentManager().popBackStackImmediate("teste", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+					//mDrawerList.setItemChecked(position, true);
+
+
+					break;
+
+				case 1:
+					ReportListFragment fragment = ReportListFragment.newInstance();
+					getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+					FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+					ft.replace(R.id.containerTeste, fragment, "reportList");
+					ft.addToBackStack(null);	
+					ft.commit();
+					mDrawerList.setItemChecked(position, true);
+					//getActionBar().setTitle(mTitle);
+					mDrawerLayout.closeDrawer(mDrawerList);
+					break;
+
+				default:
+					break;
+				}
 			}
 		});
 
@@ -128,7 +158,7 @@ public class LogRecifeActivity extends FragmentActivity {
 		}
 		//TODO
 		//reseta currentReport
-		
+
 		LogRecife.get(this).setReport(null);
 	}
 
@@ -173,7 +203,7 @@ public class LogRecifeActivity extends FragmentActivity {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			GeoCoderTask task = GeoCoderTask.getInstance(this, query);
 			task.execute();
-			
+
 		}
 	}
 
