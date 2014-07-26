@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <CheckBox
+        android:id="@+id/report_list_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="false"
+        android:enabled="false"
+        android:focusable="false"
+        android:gravity="center"
+        android:padding="4dp" />
+
+    <ImageView
+        android:id="@+id/report_list_imageView"
+        android:layout_width="@dimen/report_fragment_imageView_width"
+        android:layout_height="@dimen/report_fragment_imageView_height"
+        android:adjustViewBounds="false"
+        android:background="@android:color/darker_gray"
+        android:cropToPadding="true"
+        android:scaleType="centerInside"
+        android:padding="4dp" />
+
+    <TextView
+        android:id="@+id/report_list_textView"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/list_picker_checkbox"
+        android:layout_toRightOf="@id/report_list_imageView"
+        android:layout_toLeftOf="@id/report_list_checkBox"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="Item"
+        android:textStyle="bold" />
+
+</RelativeLayout>
