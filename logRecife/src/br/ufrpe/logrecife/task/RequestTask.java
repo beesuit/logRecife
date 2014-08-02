@@ -1,6 +1,14 @@
 package br.ufrpe.logrecife.task;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,7 +23,7 @@ import br.ufrpe.logrecife.model.Logradouro;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-
+//TODO done
 public class RequestTask extends AsyncTask<Void, Void, Void> {
 	protected Context context;
 	static RequestTask sTask;
@@ -23,12 +31,12 @@ public class RequestTask extends AsyncTask<Void, Void, Void> {
 	protected ArrayList<Item> list;
 	protected LatLng latLng;
 
-	protected ProgressDialog atualizando;
+	protected ProgressDialog searching;
 
 	public RequestTask(Context c, Address address){
 		context = c;
 		mLookUpAddress = address;
-		atualizando = new ProgressDialog(context);
+		searching = new ProgressDialog(context);
 	}
 
 	public static RequestTask getInstance(Context c, Address address){
@@ -38,9 +46,9 @@ public class RequestTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected void onPreExecute(){
-		atualizando.setMessage("Procurando...");
-		atualizando.setCancelable(false);
-		atualizando.show();
+		searching.setMessage("Procurando...");
+		searching.setCancelable(false);
+		searching.show();
 
 	}
 
@@ -56,32 +64,42 @@ public class RequestTask extends AsyncTask<Void, Void, Void> {
 		
 		latLng = prepareLatLng(mLookUpAddress);
 		
-		//TODO
 		String gson = new Gson().toJson(mLookUpAddress);
-		Log.e("hello", gson);
 
 		Logradouro logradouro = new Logradouro(mLookUpAddress, latLng, list);
 		LogRecife singleton = LogRecife.get(context);
 		
 		singleton.setLogradouro(logradouro);
 		
-		//http request para o server
-		
+		if(false){
+			HttpClient hc = new DefaultHttpClient();
+	        String URL = "http://192.168.254.4:8080/Teste/Teste?lat:123";
+	        HttpGet get = new HttpGet(URL);
+	        HttpResponse rp;
+			
+	        try {
+				rp = hc.execute(get);
+				if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+	                String prefString = EntityUtils.toString(rp.getEntity());
+	                //objects = new JSONArray(prefString);
+	                Log.e("request", prefString);                
+	                }
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
 
+			return null;
+		}
 		return null;
-
 	}
 
 	@Override
 	protected void onPostExecute(Void object) {
-		atualizando.dismiss();
-		//Toast.makeText(context, teste, Toast.LENGTH_LONG).show();
+		searching.dismiss();
 		
 		Intent i = new Intent(context, ResultActivity.class);
-		//Bundle bundle = new Bundle();
-		//bundle.putStringArrayList("list", list);
-		//bundle.putParcelable("latLng", latLng);
-		//i.putExtras(bundle);
 		context.startActivity(i);
 	}
 	

@@ -20,7 +20,7 @@ public class ReportListAdapter extends ArrayAdapter<Report>{
 	private final ArrayList<Report> array;
 
 	public ReportListAdapter(Context context, ArrayList<Report> array) {
-		super(context, R.layout.search_list_row, array);
+		super(context, R.layout.report_list_item, array);
 		this.context = context;
 		this.array = array;
 	}

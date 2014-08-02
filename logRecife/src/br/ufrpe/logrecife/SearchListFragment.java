@@ -10,27 +10,27 @@ import android.widget.ListView;
 import br.ufrpe.logrecife.adapter.MyArrayAdapter;
 import br.ufrpe.logrecife.task.RequestTask;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public class SearchListFragment extends ListFragment {
+	private final static String ADDRESS_LIST = "addressList";
 	
-	ArrayList<Address> array = new ArrayList<Address>();
+	ArrayList<Address> addressList = new ArrayList<Address>();
+	
+	public static SearchListFragment newInstance(ArrayList<Address> addressList){
+		Bundle args = new Bundle();
+		args.putParcelableArrayList(ADDRESS_LIST, addressList);
+		SearchListFragment fragment = new SearchListFragment();
+		fragment.setArguments(args);
+		
+		return fragment;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		this.setRetainInstance(true);
-		array = this.getArguments().getParcelableArrayList("teste");
-		/*ArrayList<String> array = new ArrayList<String>();
-
-		for(int i = 0; i<21; i++){
-			array.add("Item"+i);
-		}*/
+		addressList = this.getArguments().getParcelableArrayList(ADDRESS_LIST);
 		
-		MyArrayAdapter adapter = new MyArrayAdapter(this.getActivity(), array);
-		//ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), 
-			//	android.R.layout.simple_list_item_1, android.R.id.text1, array);
-		
+		MyArrayAdapter adapter = new MyArrayAdapter(this.getActivity(), addressList);
 		setListAdapter(adapter);
 
 	}
@@ -38,21 +38,9 @@ public class SearchListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		
-		RequestTask task = RequestTask.getInstance(this.getActivity(), array.get(position));
+		RequestTask task = RequestTask.getInstance(this.getActivity(), addressList.get(position));
 		task.execute();
-		
-		//FragmentManager fm = this.getActivity().getSupportFragmentManager();
-		//fm.beginTransaction().replace(R.id.container, newFragment).commit();
-		
-	}
-	
-	public LatLng prepareExtra(Address address){
-		if(address.hasLatitude() && address.hasLongitude()){
-			return new LatLng(address.getLatitude(), address.getLongitude());
-		}else{
-			return null;
-		}
-
+				
 	}
 	
 }

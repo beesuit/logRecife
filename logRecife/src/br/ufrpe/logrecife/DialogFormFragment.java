@@ -9,23 +9,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.EditText;
 
 public class DialogFormFragment extends DialogFragment {
 
 	public static final String EXTRA_EMAIL = "email";
-
-	//test
 	private String email;
-
-	public DialogFormFragment() {
-		// TODO Auto-generated constructor stub
-		email = "email";
-	}
+	private EditText editText;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
 		View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_send_form, null);
+		editText = (EditText)v.findViewById(R.id.form_email_editText);
+		
 		
 		return new AlertDialog.Builder(getActivity())
         .setView(v)
@@ -33,6 +30,7 @@ public class DialogFormFragment extends DialogFragment {
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
         	@Override
             public void onClick(DialogInterface dialog, int which) {
+        		email = editText.getText().toString();
                 sendResult(Activity.RESULT_OK);
             }
         })
@@ -47,9 +45,10 @@ public class DialogFormFragment extends DialogFragment {
 	}
 	
 	private void sendResult(int resultCode) {
-        if (getTargetFragment() == null) 
-            return;
-
+        if (getTargetFragment() == null) {
+        	return;
+        }
+        
         Intent i = new Intent();
         i.putExtra(EXTRA_EMAIL, email);
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, i);

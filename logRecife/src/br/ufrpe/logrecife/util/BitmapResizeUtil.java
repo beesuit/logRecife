@@ -6,10 +6,6 @@ import android.graphics.BitmapFactory;
 import br.ufrpe.logrecife.R;
 
 public class BitmapResizeUtil {
-
-	public BitmapResizeUtil() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public static Bitmap resizeBitmap(Context context, String filepath) {
 		// Get the dimensions of the View

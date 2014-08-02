@@ -1,18 +1,10 @@
 package br.ufrpe.logrecife.model;
 
 import java.util.ArrayList;
-
-import org.json.JSONObject;
-
 import android.location.Address;
-
 import com.google.android.gms.maps.model.LatLng;
 
 public class Logradouro {
-	//private static final String
-	//private static final String
-	//private static final String
-	
 	private Address address;
 	private LatLng latLng;
 	private ArrayList<Item> items;
@@ -50,13 +42,6 @@ public class Logradouro {
 	public String getLogradouro(){
 		return address.getAddressLine(0);
 	}
-	
-	public JSONObject toJSON(){
-		//TODO
-		JSONObject json = new JSONObject();
-		return json;
-	}
-	
 	
 
 }

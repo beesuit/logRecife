@@ -10,14 +10,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-
-
 
 public class MapDialogFragment extends DialogFragment {
 
-	public static final String EXTRA_LAT_LNG = "lat_lng";
-	//TODO
+	public static final String EXTRA_LAT_LNG = "latLng";
 	public static final String EXTRA_POLYLINE = "polyline";
 	private SupportMapFragment mapFragment;
 	private LatLng latLng;
@@ -31,19 +27,9 @@ public class MapDialogFragment extends DialogFragment {
 		fragment.setStyle(STYLE_NO_TITLE, 0);
 		return fragment;
 	}
-	
-	public static MapDialogFragment newInstance(){
-		
-		MapDialogFragment fragment = new MapDialogFragment();
-		fragment.setStyle(STYLE_NO_TITLE, 0);
-		return fragment;
-	}
-	
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		latLng = (LatLng) getArguments().getParcelable(EXTRA_LAT_LNG);
 	}
@@ -62,10 +48,8 @@ public class MapDialogFragment extends DialogFragment {
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		GoogleMap map = mapFragment.getMap();
-		//map.setMyLocationEnabled(true);
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.5f), 2000, null);
 
 	}

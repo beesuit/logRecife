@@ -2,7 +2,6 @@ package br.ufrpe.logrecife.model;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.UUID;
 
 import android.content.Context;
